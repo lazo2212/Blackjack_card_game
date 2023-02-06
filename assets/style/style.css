@@ -1,3 +1,37 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+  background-color: #fff;
+}
+
 h1 {
   text-align: center;
+}
+
+.container {
+  width: 100%;
+  height: 80%;
+  background-color: green;
+  border: 5px solid #000;
+  border-radius: 0 0 30% 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  text-align: center;
+}
+
+.container .player_container {
+  margin-bottom: 100px;
+}
+
+.card {
+  height: 90px;
+  padding: 2px;
 }
