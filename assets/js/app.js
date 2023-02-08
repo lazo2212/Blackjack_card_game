@@ -54,5 +54,13 @@ const drawCard = (deck) => {
 
 const initialDealingCards = () => {
   // podijeliti svakom igraču po dvije karte s time da je dilereva druga karta okrenuta prema dolje
+  dealerCardsInHand.push(drawCard(deck));
+  dealerCardsInHand.push(drawCard(deck));
+  playersCardsInHand.push(drawCard(deck));
+  playersCardsInHand.push(drawCard(deck));
   //igrač izabire da li ce ostati na istim kartama ili ce callat jos jednu
 };
+
+initialDealingCards();
+console.log(dealerCardsInHand);
+console.log(playersCardsInHand);
