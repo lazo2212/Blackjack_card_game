@@ -41,7 +41,7 @@ const dealerHand = document.querySelector('.dealer_hand');
 const displayDealerScore = document.querySelector('#dealer_score');
 const playerHand = document.querySelector('.player_hand');
 const displayPlayerScore = document.querySelector('#player_score');
-const buttonStay = document.querySelector('#stay');
+const buttonStand = document.querySelector('#stand');
 const buttonHit = document.querySelector('#hit');
 
 // return card as object
@@ -50,6 +50,32 @@ const drawCard = (deck) => {
   const card = deck.splice(randomNumber, 1);
 
   return card[0];
+};
+
+const createDealersCards = () => {
+  dealerHand.innerHTML = '';
+  dealerScore = 0;
+  for (const card of dealerCardsInHand) {
+    const createCard = document.createElement('img');
+    createCard.src = card.image;
+    createCard.classList.add('card');
+    dealerHand.appendChild(createCard);
+    dealerScore += showScore(card.card);
+  }
+  displayDealerScore.textContent = dealerScore;
+};
+
+const createPlayersCards = () => {
+  playerHand.innerHTML = '';
+  playerScore = 0;
+  for (const card of playersCardsInHand) {
+    const createCard = document.createElement('img');
+    createCard.src = card.image;
+    createCard.classList.add('card');
+    playerHand.appendChild(createCard);
+    playerScore += showScore(card.card);
+  }
+  displayPlayerScore.textContent = playerScore;
 };
 
 const showScore = (cardInHand) => {
@@ -78,16 +104,25 @@ const showMessage = (text) => {
 const checkScore = () => {
   if (playerScore === 21) {
     showMessage('You win!!');
+    buttonStand.removeEventListener();
   } else if (dealerScore === 21) {
     showMessage('You loose!!');
+  } else if (playerScore > dealerScore) {
+    showMessage('You win!');
+  } else if (playerScore === dealerScore) {
+    showMessage('Draw');
   } else {
-    showMessage('next');
+    showMessage('You loose!');
   }
 };
 
 const standOrHit = () => {
-  buttonStay.addEventListener('click', () => {
+  buttonStand.addEventListener('click', () => {
     checkScore();
+  });
+  buttonHit.addEventListener('click', () => {
+    playersCardsInHand.push(drawCard(deck));
+    createPlayersCards();
   });
 };
 
@@ -98,26 +133,8 @@ const initialDealingCards = () => {
   playersCardsInHand.push(drawCard(deck));
   playersCardsInHand.push(drawCard(deck));
 
-  // create dealers cards
-  for (const card of dealerCardsInHand) {
-    const createCard = document.createElement('img');
-    createCard.src = card.image;
-    createCard.classList.add('card');
-    dealerHand.appendChild(createCard);
-    dealerScore += showScore(card.card);
-  }
-
-  // create players cards
-  for (const card of playersCardsInHand) {
-    const createCard = document.createElement('img');
-    createCard.src = card.image;
-    createCard.classList.add('card');
-    playerHand.appendChild(createCard);
-    playerScore += showScore(card.card);
-  }
-
-  displayDealerScore.textContent = dealerScore;
-  displayPlayerScore.textContent = playerScore;
+  createDealersCards();
+  createPlayersCards();
 
   //igrač izabire da li ce ostati na istim kartama ili ce callat jos jednu
   standOrHit();
