@@ -102,17 +102,32 @@ const showMessage = (text) => {
 };
 
 const checkScore = () => {
+  let i = true;
+  while (i) {
+    if (dealerScore < playerScore) {
+      dealerCardsInHand.push(drawCard(deck));
+      createDealersCards();
+      if (dealerScore > 21 || dealerScore > playerScore) {
+        i = false;
+      }
+    } else if (dealerScore > playerScore) {
+      i = false;
+    }
+  }
   if (playerScore === 21) {
     showMessage('You win!!');
-    buttonStand.removeEventListener();
   } else if (dealerScore === 21) {
     showMessage('You loose!!');
+  } else if (dealerScore > 21) {
+    showMessage('You win!!');
+  } else if (playerScore > 21) {
+    showMessage('You loose!!');
   } else if (playerScore > dealerScore) {
-    showMessage('You win!');
+    showMessage('You win!!');
   } else if (playerScore === dealerScore) {
     showMessage('Draw');
   } else {
-    showMessage('You loose!');
+    showMessage('You loose!!');
   }
 };
 
@@ -123,6 +138,7 @@ const standOrHit = () => {
   buttonHit.addEventListener('click', () => {
     playersCardsInHand.push(drawCard(deck));
     createPlayersCards();
+    checkScore();
   });
 };
 

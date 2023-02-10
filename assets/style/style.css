@@ -40,6 +40,7 @@ h1 {
 .score {
   font-size: 20px;
   font-weight: 700;
+  text-shadow: 1px 1px 1px #fff;
 }
 
 .card {
@@ -69,6 +70,7 @@ h1 {
   transform: translate(-50%, -50%);
   background-color: #fff;
   border: 1px solid #000;
+  border-radius: 10px;
   box-shadow: 3px 5px 20px #000;
   font-size: 20px;
   font-weight: 700;
