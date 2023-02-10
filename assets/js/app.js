@@ -101,16 +101,26 @@ const showMessage = (text) => {
   document.body.appendChild(message);
 };
 
+const hit = () => {
+  playersCardsInHand.push(drawCard(deck));
+  createPlayersCards();
+  if (playerScore > 21) {
+    checkScore();
+  }
+};
+
 const checkScore = () => {
   let i = true;
   while (i) {
-    if (dealerScore < playerScore) {
+    if (dealerScore <= playerScore && playerScore <= 21) {
       dealerCardsInHand.push(drawCard(deck));
       createDealersCards();
-      if (dealerScore > 21 || dealerScore > playerScore) {
+      if (dealerScore > 21 && dealerScore > playerScore) {
         i = false;
       }
-    } else if (dealerScore > playerScore) {
+    } else if (dealerScore >= playerScore) {
+      i = false;
+    } else {
       i = false;
     }
   }
@@ -129,17 +139,13 @@ const checkScore = () => {
   } else {
     showMessage('You loose!!');
   }
+  buttonStand.removeEventListener('click', checkScore);
+  buttonHit.removeEventListener('click', hit);
 };
 
 const standOrHit = () => {
-  buttonStand.addEventListener('click', () => {
-    checkScore();
-  });
-  buttonHit.addEventListener('click', () => {
-    playersCardsInHand.push(drawCard(deck));
-    createPlayersCards();
-    checkScore();
-  });
+  buttonStand.addEventListener('click', checkScore);
+  buttonHit.addEventListener('click', hit);
 };
 
 const initialDealingCards = () => {
@@ -152,7 +158,6 @@ const initialDealingCards = () => {
   createDealersCards();
   createPlayersCards();
 
-  //igrač izabire da li ce ostati na istim kartama ili ce callat jos jednu
   standOrHit();
 };
 
