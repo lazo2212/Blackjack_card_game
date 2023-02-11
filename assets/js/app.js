@@ -116,9 +116,11 @@ const checkScore = () => {
       dealerCardsInHand.push(drawCard(deck));
       createDealersCards();
       if (dealerScore > 21 && dealerScore > playerScore) {
+        createDealersCards();
         i = false;
       }
     } else if (dealerScore >= playerScore) {
+      createDealersCards();
       i = false;
     } else {
       i = false;
@@ -155,7 +157,23 @@ const initialDealingCards = () => {
   playersCardsInHand.push(drawCard(deck));
   playersCardsInHand.push(drawCard(deck));
 
-  createDealersCards();
+  // ovdje treba napraviti da se druga karta u dealera ne vidi
+  for (let i = 0; i < dealerCardsInHand.length; i++) {
+    const createCard = document.createElement('img');
+    if (i === 1) {
+      createCard.src = './assets/images/cardback.png';
+    } else {
+      createCard.src = dealerCardsInHand[i].image;
+    }
+    createCard.classList.add('card');
+    dealerHand.appendChild(createCard);
+    if (i === 0) {
+      dealerScore += showScore(dealerCardsInHand[i].card);
+      displayDealerScore.textContent = dealerScore;
+    } else {
+      dealerScore += showScore(dealerCardsInHand[i].card);
+    }
+  }
   createPlayersCards();
 
   standOrHit();
