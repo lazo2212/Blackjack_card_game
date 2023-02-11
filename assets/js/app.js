@@ -157,15 +157,16 @@ const initialDealingCards = () => {
   playersCardsInHand.push(drawCard(deck));
   playersCardsInHand.push(drawCard(deck));
 
-  // ovdje treba napraviti da se druga karta u dealera ne vidi
+  //create dealers cards, second card turned back
   for (let i = 0; i < dealerCardsInHand.length; i++) {
     const createCard = document.createElement('img');
     if (i === 1) {
       createCard.src = './assets/images/cardback.png';
+      createCard.classList.add('cardback');
     } else {
       createCard.src = dealerCardsInHand[i].image;
+      createCard.classList.add('card');
     }
-    createCard.classList.add('card');
     dealerHand.appendChild(createCard);
     if (i === 0) {
       dealerScore += showScore(dealerCardsInHand[i].card);
